@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lootera Deals</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '1445630453980390');
+fbq('track', 'PageView');
+</script>
+
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1445630453980390&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="hero">
+    <h1>🔥 Hidden Loot Deals</h1>
+    <p>Join 100,000+ users saving money</p>
+
+    <a href="#" class="btn telegram-link" data-source="hero_button">
+        🚀 Join Telegram
+    </a>
+</div>
+
+<div class="timer">
+    ⚠️ Offer expires in <span id="countdown">60</span> sec
+</div>
+
+<div class="deal-section">
+    <h2 class="deal-title">🔥 Real Loot Deals</h2>
+
+    <div class="grid">
+        <div class="card"><span class="tag">90% OFF</span><img src="assets/offer1_new.jpeg" alt="Loot Deal 1"></div>
+        <div class="card"><span class="tag">🔥 HOT</span><img src="assets/offer2_new.jpeg" alt="Loot Deal 2"></div>
+        <div class="card"><span class="tag">99% OFF</span><img src="assets/offer3_new.jpeg" alt="Loot Deal 3"></div>
+        <div class="card"><span class="tag">🔥 HOT</span><img src="assets/offer4.jpeg" alt="Loot Deal 4"></div>
+        <div class="card"><span class="tag">93% OFF</span><img src="assets/offer5.jpeg" alt="Loot Deal 5"></div>
+        <div class="card"><span class="tag">🔥 HOT</span><img src="assets/offer6_new.jpeg" alt="Loot Deal 6"></div>
+        <div class="card"><span class="tag">92% OFF</span><img src="assets/offer7.jpeg" alt="Loot Deal 7"></div>
+        <div class="card"><span class="tag">🔥 HOT</span><img src="assets/offer8.jpeg" alt="Loot Deal 8"></div>
+        <div class="card"><span class="tag">99% OFF</span><img src="assets/offer9.jpeg" alt="Loot Deal 9"></div>
+        <div class="card"><span class="tag">🔥 HOT</span><img src="assets/offer10.jpeg" alt="Loot Deal 10"></div>
+        <div class="card"><span class="tag">98% OFF</span><img src="assets/offer11.jpeg" alt="Loot Deal 11"></div>
+        <div class="card"><span class="tag">🔥 HOT</span><img src="assets/offer12.jpeg" alt="Loot Deal 12"></div>
+        <div class="card"><span class="tag">99% OFF</span><img src="assets/offer13.jpeg" alt="Loot Deal 13"></div>
+        <div class="card"><span class="tag">🔥 HOT</span><img src="assets/offer14.jpeg" alt="Loot Deal 14"></div>
+        <div class="card"><span class="tag">97% OFF</span><img src="assets/offer15.jpeg" alt="Loot Deal 15"></div>
+        <div class="card"><span class="tag">🔥 HOT</span><img src="assets/offer16.jpeg" alt="Loot Deal 16"></div>
+        <div class="card"><span class="tag">87% OFF</span><img src="assets/offer17.jpeg" alt="Loot Deal 17"></div>
+        <div class="card"><span class="tag">🔥 HOT</span><img src="assets/offer18.jpeg" alt="Loot Deal 18"></div>
+    </div>
+</div>
+
+<div class="social">
+    <h2>💥 1,00,000+ Members Joined</h2>
+    <p>Deals drop daily at 9 PM</p>
+</div>
+
+<div class="sticky-btn">
+    <a href="#" class="telegram-link" data-source="sticky_button">
+        🔥 Join Now Before It’s Gone
+    </a>
+</div>
+
+<div id="notification" class="notification"></div>
+
+<script>
+const TELEGRAM_URL = "https://telegram.dog/looteradeals247";
+let alreadyRedirecting = false;
+
+function safeFbqTrack(type, eventName, data = {}) {
+    if (typeof fbq === "function") {
+        fbq(type, eventName, data);
+    }
+}
+
+/*
+IMPORTANT:
+Lead + TelegramClick fire ONLY on real CTA button clicks.
+*/
+function trackLeadAndRedirect(source = "cta_button") {
+    if (alreadyRedirecting) return;
+    alreadyRedirecting = true;
+
+    safeFbqTrack('track', 'Lead', {
+        content_name: 'Telegram Join',
+        content_category: 'Lootera Deals',
+        source: source
+    });
+
+    safeFbqTrack('trackCustom', 'TelegramClick', {
+        button_source: source
+    });
+
+    setTimeout(() => {
+        window.location.href = TELEGRAM_URL;
+    }, 400);
+}
+
+/*
+Auto redirect / global touch redirect should NOT count as Lead.
+These are tracked separately only for analysis.
+*/
+function passiveRedirect(source = "passive_redirect") {
+    if (alreadyRedirecting) return;
+    alreadyRedirecting = true;
+
+    safeFbqTrack('trackCustom', 'PassiveTelegramRedirect', {
+        redirect_source: source,
+        content_category: 'Lootera Deals'
+    });
+
+    setTimeout(() => {
+        window.location.href = TELEGRAM_URL;
+    }, 250);
+}
+
+// TIMER
+let time = 60;
+setInterval(() => {
+    if (time > 0) {
+        time--;
+        document.getElementById("countdown").innerText = time;
+    }
+}, 1000);
+
+// FAKE NOTIFICATIONS
+const names = ["Rohit", "Aman", "Priya", "Neha", "Rahul"];
+const cities = ["Delhi", "Mumbai", "Pune", "Bangalore"];
+
+function showNotification() {
+    let name = names[Math.floor(Math.random() * names.length)];
+    let city = cities[Math.floor(Math.random() * cities.length)];
+    let n = document.getElementById("notification");
+
+    n.innerText = `${name} from ${city} just joined 🎉`;
+    n.style.display = "block";
+
+    setTimeout(() => {
+        n.style.display = "none";
+    }, 4000);
+}
+
+setInterval(showNotification, 5000);
+
+// CTA BUTTON TRACKING - ONLY THIS FIRES LEAD
+document.querySelectorAll(".telegram-link").forEach(button => {
+    button.addEventListener("click", function(e) {
+        e.preventDefault();
+        trackLeadAndRedirect(this.dataset.source || "cta_button");
+    });
+});
+
+// AUTO REDIRECT AFTER 15 SEC - NO LEAD EVENT
+setTimeout(() => {
+    passiveRedirect("auto_redirect_15_sec");
+}, 15000);
+
+// GLOBAL TAP REDIRECT - NO LEAD EVENT
+let canRedirect = false;
+
+setTimeout(() => {
+    canRedirect = true;
+}, 2000);
+
+document.addEventListener("click", function(e) {
+    if (e.target.closest("a")) return;
+
+    if (canRedirect) {
+        passiveRedirect("global_click");
+    }
+});
+
+document.addEventListener("touchstart", function(e) {
+    if (e.target.closest("a")) return;
+
+    if (canRedirect) {
+        passiveRedirect("global_touch");
+    }
+}, { passive: true });
+
+// SCROLL TRACKING
+let scrollTracked = false;
+
+window.addEventListener("scroll", function() {
+    let scrollPercent =
+        ((window.scrollY + window.innerHeight) / document.body.scrollHeight) * 100;
+
+    if (!scrollTracked && scrollPercent > 40) {
+        scrollTracked = true;
+
+        safeFbqTrack('track', 'ViewContent', {
+            content_name: 'Scrolled 40%',
+            content_category: 'Lootera Deals'
+        });
+    }
+});
+</script>
+
+</body>
+</html>
