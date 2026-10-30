@@ -8,13 +8,17 @@ if (yearEl) {
 let telegramLeadTracked = false;
 document.querySelectorAll('a[href*="t.me/"]').forEach(function(link) {
   link.addEventListener("click", function() {
-    if (!telegramLeadTracked && typeof fbq === "function") {
-      telegramLeadTracked = true;
-      fbq("track", "Lead", {
-        content_name: "Telegram Join",
-        content_category: "Lootera Deals",
-        source: this.classList.contains("cta") ? "legal_page_topbar" : "legal_page_footer"
-      });
+    try {
+      if (!telegramLeadTracked && typeof fbq === "function") {
+        telegramLeadTracked = true;
+        fbq("track", "Lead", {
+          content_name: "Telegram Join",
+          content_category: "Lootera Deals",
+          source: this.classList.contains("cta") ? "legal_page_topbar" : "legal_page_footer"
+        });
+      }
+    } catch (err) {
+      console.warn("Meta Pixel tracking notice:", err);
     }
   });
 });

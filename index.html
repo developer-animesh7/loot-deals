@@ -17,12 +17,12 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1784673895916239');
+fbq('init', '1290712092191731');
 fbq('track', 'PageView');
 </script>
 <noscript>
 <img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1784673895916239&ev=PageView&noscript=1"
+src="https://www.facebook.com/tr?id=1290712092191731&ev=PageView&noscript=1"
 alt=""/>
 </noscript>
 <!-- End Meta Pixel Code -->
@@ -89,7 +89,11 @@ let alreadyRedirecting = false;
 
 function safeFbqTrack(type, eventName, data = {}) {
     if (typeof fbq === "function") {
-        fbq(type, eventName, data);
+        try {
+            fbq(type, eventName, data);
+        } catch (e) {
+            console.warn("Meta Pixel tracking notice:", e);
+        }
     }
 }
 
@@ -101,15 +105,19 @@ function trackLeadAndRedirect(source = "cta_button") {
     if (alreadyRedirecting) return;
     alreadyRedirecting = true;
 
-    safeFbqTrack('track', 'Lead', {
-        content_name: 'Telegram Join',
-        content_category: 'Lootera Deals',
-        source: source
-    });
+    try {
+        safeFbqTrack('track', 'Lead', {
+            content_name: 'Telegram Join',
+            content_category: 'Lootera Deals',
+            source: source
+        });
 
-    safeFbqTrack('trackCustom', 'TelegramClick', {
-        button_source: source
-    });
+        safeFbqTrack('trackCustom', 'TelegramClick', {
+            button_source: source
+        });
+    } catch (e) {
+        console.warn("Tracking notice:", e);
+    }
 
     setTimeout(() => {
         window.location.href = TELEGRAM_URL;
@@ -124,10 +132,14 @@ function passiveRedirect(source = "passive_redirect") {
     if (alreadyRedirecting) return;
     alreadyRedirecting = true;
 
-    safeFbqTrack('trackCustom', 'PassiveTelegramRedirect', {
-        redirect_source: source,
-        content_category: 'Lootera Deals'
-    });
+    try {
+        safeFbqTrack('trackCustom', 'PassiveTelegramRedirect', {
+            redirect_source: source,
+            content_category: 'Lootera Deals'
+        });
+    } catch (e) {
+        console.warn("Tracking notice:", e);
+    }
 
     setTimeout(() => {
         window.location.href = TELEGRAM_URL;
